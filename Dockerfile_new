@@ -1,0 +1,22 @@
+FROM debian:buster-20181011
+
+RUN cat /etc/apt/sources.list
+RUN sed -i 's/deb.debian.org/snapshot.debian.org\/archive\/debian\/20181231T000000Z/g' /etc/apt/sources.list
+RUN cat /etc/apt/sources.list
+RUN apt-get update && apt-get install -y curl python build-essential
+
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+    && apt-get install -y nodejs
+
+
+WORKDIR /app
+COPY package*.json ./
+
+# Create logs directory
+RUN mkdir -p logs
+RUN npm install #> logs/npm_install_output.txt 2>&1
+#RUN cat logs/npm_install_output.txt
+
+COPY . .
+
+CMD ["npm", "start"]

@@ -7,7 +7,7 @@ var env = process.env.NODE_ENV || "development";
 var config = require("../config/db.js")
 
 if (process.env.DATABASE_URL) {
-  var sequelize = new Sequelize("dburl");
+  var sequelize = new Sequelize("localhost:5432");
 } else {
   var sequelize = new Sequelize("db", "db", "db", {
     host: "db",

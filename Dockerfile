@@ -1,5 +1,6 @@
 FROM node:carbon-buster
 LABEL MAINTAINER="Subash SN"
+#RUN sed -i 's/deb.debian.org/snapshot.debian.org\/archive\/debian\/20181231T000000Z/g' /etc/apt/sources.list
 
 # NONE OF THIS WORKS
 ## Need to update glibc version to 2.29
@@ -15,6 +16,7 @@ LABEL MAINTAINER="Subash SN"
 #
 ##    export LD_LIBRARY_PATH=/opt/glibc-2.29/lib:$LD_LIBRARY_PATH && \
 #
+# update dynamic links in Linux debian to load new glibc
 #RUN pwd && ls -l
 #RUN ls -l /opt/glibc-2.29/lib
 #RUN echo "/opt/glibc-2.29/lib" | tee /etc/ld.so.conf.d/glibc-2.29.conf
@@ -27,6 +29,7 @@ LABEL MAINTAINER="Subash SN"
 #
 #RUN echo "LD_LIBRARY_PATH is: $LD_LIBRARY_PATH"
 #
+# segmentation fault every time no matter what
 #RUN LD_LIBRARY_PATH="/opt/glibc-2.29/lib" ldd --version
 ##ENV LD_LIBRARY_PATH="/opt/glibc-2.29/lib"
 ##RUN echo "LD_LIBRARY_PATH is: $LD_LIBRARY_PATH"
@@ -36,11 +39,13 @@ LABEL MAINTAINER="Subash SN"
 WORKDIR /app
 COPY package*.json ./
 
-# Create logs directory
-RUN mkdir -p logs
+RUN apt-get update && apt-get install -y build-essential python
+RUN npm install --build-from-source
 
-RUN npm install > logs/npm_install_output.txt 2>&1
-RUN cat logs/npm_install_output.txt
+# Create logs directory
+#RUN mkdir -p logs
+#RUN npm install #> logs/npm_install_output.txt 2>&1
+#RUN cat logs/npm_install_output.txt
 
 COPY . .
 
