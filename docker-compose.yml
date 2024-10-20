@@ -5,6 +5,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+    image: arienandalibi2/dvna-tp2:latest
     ports:
       - "9090:9090"
     depends_on:
