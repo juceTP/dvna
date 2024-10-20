@@ -7,9 +7,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9090:9090"
-#    volumes:
-#      - .:/app
-#      - /app/node_modules
     depends_on:
       - db
     env_file:
@@ -17,8 +14,7 @@ services:
 
   db:
     image: postgres:13
-#    expose:
-#      - "3306"
+    container_name: db
     ports:
       - "5432:5432"
     volumes:
