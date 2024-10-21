@@ -6,14 +6,19 @@ var Sequelize = require("sequelize");
 var env = process.env.NODE_ENV || "development";
 var config = require("../config/db.js")
 
-if (process.env.DATABASE_URL) {
-  var sequelize = new Sequelize("localhost:5432");
-} else {
-  var sequelize = new Sequelize("db", "db", "db", {
-    host: "db",
-    dialect: "postgres"
-  });
-}
+// Define environment variables for connection details
+var dbHost = process.env.DB_HOST || "localhost";
+var dbName = process.env.DB_NAME || "mydatabase";
+var dbUser = process.env.DB_USER || "myuser";
+var dbPassword = process.env.DB_PASSWORD || "mypassword";
+var dbPort = process.env.DB_PORT || "5432";  // Default port is 5432 for PostgreSQL
+
+// Initialize Sequelize with separate environment variables
+var sequelize = new Sequelize(dbName, dbUser, dbPassword, {
+  host: dbHost,
+  port: dbPort,
+  dialect: "postgres",
+});
 
 sequelize
   .authenticate()
