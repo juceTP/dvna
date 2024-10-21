@@ -7,13 +7,13 @@ var env = process.env.NODE_ENV || "development";
 var config = require("../config/db.js")
 
 // Define environment variables for connection details
-var dbHost = process.env.DB_HOST || "localhost";
-var dbName = process.env.DB_NAME || "mydatabase";
-var dbUser = process.env.DB_USER || "myuser";
-var dbPassword = process.env.DB_PASSWORD || "mypassword";
-var dbPort = process.env.DB_PORT || "5432";  // Default port is 5432 for PostgreSQL
+var dbHost = process.env.POSTGRES_HOST || "localhost";
+var dbName = process.env.POSTGRES_DB || "mydatabase";
+var dbUser = process.env.POSTGRES_USER || "myuser";
+var dbPassword = process.env.POSTGRES_PASSWORD || "mypassword";
+var dbPort = process.env.DB_PORT || "5432"; 
 
-// Initialize Sequelize with separate environment variables
+// Initialize Sequelize with the environment variables
 var sequelize = new Sequelize(dbName, dbUser, dbPassword, {
   host: dbHost,
   port: dbPort,
