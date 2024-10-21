@@ -21,9 +21,5 @@ services:
       - pgdata:/var/lib/postgresql/data
     env_file:
       - ./vars.env
-    environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
 volumes:
   pgdata:
